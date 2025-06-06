@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@estilo.css" styleClass="root"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            
+            fx:controller="trabalhofinancas.LimitesController">
+
+    <HBox AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          alignment="CENTER">
+
+        <VBox alignment="CENTER" spacing="20" maxWidth="450"
+              style="-fx-padding: 40 30 60 30;">
+
+            <Label text="🔒 Definir Limites"
+                   styleClass="label-title" />
+
+            <!-- Linha: Categoria -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Categoria:" minWidth="90"/>
+                <ComboBox fx:id="cbCategoriaLimite" prefWidth="250"/>
+            </HBox>
+
+            <!-- Linha: Valor Limite -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Limite (€):" minWidth="90"/>
+                <TextField fx:id="txtLimiteValor" prefWidth="250"/>
+            </HBox>
+
+            <!-- Botão -->
+            <Button text="Guardar Limite" onAction="#handleGuardarLimite" styleClass="button"/>
+            <Button text="Remover Limite" onAction="#handleRemoverLimite" styleClass="button"/>
+        </VBox>
+    </HBox>
+</AnchorPane>

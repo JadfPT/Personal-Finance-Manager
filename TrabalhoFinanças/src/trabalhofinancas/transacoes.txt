@@ -1,0 +1,13 @@
+Receita;Alimentação;4000.0;2025-06-20;
+Receita;Transporte;5000.0;2026-06-15;
+Despesa;Outro;2000.0;2026-07-16;
+Receita;Lazer;4000.0;2025-05-12;
+Receita;Alimentação;60000.0;2026-09-15;
+Receita;Alimentação;2000.0;2025-05-12;
+Despesa;Lazer;70000.0;2025-06-24;
+Despesa;Outro;4000.0;2025-07-18;
+Despesa;Alimentação;2000.0;2025-06-15;
+Despesa;Saúde;4000.0;2025-06-28;
+Despesa;Transporte;1500.0;2025-07-19;
+Receita;Educação;10000.0;2025-07-07;
+Receita;Alimentação;100000.0;2025-07-01;

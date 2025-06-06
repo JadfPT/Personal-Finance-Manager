@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@estilo.css" styleClass="root"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="trabalhofinancas.EstatisticasController">
+
+    <TabPane tabClosingPolicy="UNAVAILABLE"
+             AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10"
+             AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
+             style="-fx-background-radius: 10; -fx-padding: 10;">
+
+        <!-- Circular -->
+        <Tab text="📊 Circular">
+            <AnchorPane>
+                <PieChart fx:id="pieChart"
+                          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
+                          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" />
+            </AnchorPane>
+        </Tab>
+
+        <!-- Barras -->
+        <Tab text="📈 Barras">
+            <AnchorPane>
+                <BarChart fx:id="barChart"
+                          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20"
+                          AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+                    <xAxis>
+                        <CategoryAxis fx:id="barXAxis" label="Data"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="barYAxis" label="Total (€)"/>
+                    </yAxis>
+                </BarChart>
+            </AnchorPane>
+        </Tab>
+
+        <!-- Linha -->
+        <Tab text="📉 Linha">
+            <AnchorPane>
+
+                <!-- Linha horizontal com ComboBox alinhado à direita -->
+                <HBox alignment="TOP_RIGHT"
+                      AnchorPane.topAnchor="10" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+                    <ComboBox fx:id="cbAno" onAction="#atualizarGraficoPorAno"
+                              prefWidth="120" promptText="Ano" />
+                </HBox>
+
+                <LineChart fx:id="lineChart"
+                           AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="20"
+                           AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+                    <xAxis>
+                        <CategoryAxis fx:id="lineXAxis" label="Data"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="lineYAxis" label="Saldo (€)"/>
+                    </yAxis>
+                </LineChart>
+            </AnchorPane>
+        </Tab>
+    </TabPane>
+</AnchorPane>

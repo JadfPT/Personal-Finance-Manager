@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@estilo.css" styleClass="root"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="trabalhofinancas.HistoricoController">
+
+    <VBox spacing="20" alignment="TOP_CENTER"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          style="-fx-padding: 30 50;">
+
+        <!-- Título -->
+        <Label text="📚 Histórico de Transações"
+               styleClass="label-title" />
+
+        <!-- Filtros -->
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Mês:" />
+            <ComboBox fx:id="cbMes" promptText="Todos" prefWidth="120"/>
+            <Label text="Categoria:" />
+            <ComboBox fx:id="cbCategoria" promptText="Todas" prefWidth="140"/>
+            <Button text="Filtrar" onAction="#aplicarFiltros" styleClass="button"/>
+        </HBox>
+
+        <!-- Tabela -->
+        <TableView fx:id="tabelaTransacoes" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
+                <TableColumn fx:id="colCategoria" text="Categoria" prefWidth="150"/>
+                <TableColumn fx:id="colValor" text="Valor (€)" prefWidth="100"/>
+                <TableColumn fx:id="colData" text="Data" prefWidth="150"/>
+                <TableColumn fx:id="colDescricao" text="Descricao" prefWidth="150"/>
+            </columns>
+        </TableView>
+
+        <!-- Botão Exportar -->
+        <Button text="⬇ Exportar .txt" onAction="#exportarParaTxt" styleClass="button"/>
+    </VBox>
+</AnchorPane>

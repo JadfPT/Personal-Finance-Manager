@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@estilo.css" styleClass="root"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="trabalhofinancas.AdicionarTransacaoController">
+
+    <HBox AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          alignment="CENTER">
+
+        <VBox alignment="CENTER" spacing="20" maxWidth="450"
+              style="-fx-padding: 40 30 60 30;">
+
+            <Label text="📝 Nova Transação"
+                   styleClass="label-title" />
+
+            <!-- Linha: Tipo -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Tipo:" minWidth="80" />
+                <ComboBox fx:id="cbTipo" prefWidth="250" />
+            </HBox>
+
+            <!-- Linha: Categoria -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Categoria:" minWidth="80" />
+                <ComboBox fx:id="cbCategoria" prefWidth="250" />
+            </HBox>
+            
+            <!-- Linha: Data -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Data:" minWidth="80" />
+                <DatePicker fx:id="dpData" prefWidth="250" />
+            </HBox>
+
+            <!-- Linha: Valor -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Valor (€):" minWidth="80" />
+                <TextField fx:id="txtValor" prefWidth="250" />
+            </HBox>
+            
+             <!-- Linha: Descrição -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Descrição:" minWidth="80" />
+                <TextField fx:id="txtDescricao" prefWidth="250" />
+            </HBox>
+
+            <!-- Botão Guardar -->
+            <Button text="💾 Guardar"
+                    onAction="#handleGuardar"
+                    styleClass="button" />
+        </VBox>
+    </HBox>
+</AnchorPane>
