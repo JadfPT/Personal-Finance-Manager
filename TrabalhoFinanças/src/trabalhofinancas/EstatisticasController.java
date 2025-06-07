@@ -45,20 +45,45 @@ public class EstatisticasController {
         cbAno.getItems().setAll(anos); // atualiza anos
     }
 
-    private void preencherPieChart() {// Gera o gráfico circular
+    private void preencherPieChart() {
         Map<String, Double> somaPorCategoria = new HashMap<>();
 
+        // Soma os valores das despesas por categoria
         for (Transacao t : DadosFinanceiros.transacoes) {
             if ("Despesa".equals(t.getTipo())) {
                 somaPorCategoria.merge(t.getCategoria(), t.getValor(), Double::sum);
             }
         }
 
+        // Total geral das despesas (para calcular percentagens)
+        double total = somaPorCategoria.values().stream()
+            .mapToDouble(Double::doubleValue)
+            .sum();
+
+        // Limpa o gráfico e adiciona os dados
         pieChart.getData().clear();
         for (var entry : somaPorCategoria.entrySet()) {
-            pieChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+            PieChart.Data data = new PieChart.Data(entry.getKey(), entry.getValue());
+            pieChart.getData().add(data);
+        }
+
+        // Necessário para garantir que os nós gráficos estão disponíveis
+        pieChart.applyCss();
+        pieChart.layout();
+
+        // Aplica tooltips com valores + percentagens
+        for (PieChart.Data data : pieChart.getData()) {
+            double valor = data.getPieValue();
+            double percentagem = (valor / total) * 100;
+
+            Tooltip tooltip = new Tooltip(
+                String.format("%s: %.2f € (%.1f%%)", data.getName(), valor, percentagem)
+            );
+
+            Tooltip.install(data.getNode(), tooltip);
         }
     }
+
 
     private void preencherBarChart() { // Gera o gráfico de barras
         Map<String, Double> totalPorMes = new TreeMap<>();

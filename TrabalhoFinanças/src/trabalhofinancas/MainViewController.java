@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class MainViewController implements Initializable {
 
@@ -16,8 +18,9 @@ public class MainViewController implements Initializable {
     @FXML private Label lblReceitasMes;
     @FXML private Label lblDespesasMes;
     @FXML private ComboBox<String> cbMesResumo;
+    @FXML private ComboBox<String> cbAno; // Adicionado
 
-    private final String[] meses = { // Nome dos 12 meses
+    private final String[] meses = {
         "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
     };
@@ -25,18 +28,31 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        cbMesResumo.getItems().addAll(meses); // colocar o nome dos 12 meses
-        cbMesResumo.setValue(meses[LocalDate.now().getMonthValue() - 1]); // Colocar o mes atual
-        cbMesResumo.setOnAction(e -> atualizarResumoMensal()); // Atualizar mes
+        // Preencher meses
+        cbMesResumo.getItems().addAll(meses);
+        cbMesResumo.setValue(meses[LocalDate.now().getMonthValue() - 1]);
+
+        // Preencher anos únicos a partir das transações
+        Set<String> anos = new TreeSet<>();
+        for (Transacao t : DadosFinanceiros.transacoes) {
+            anos.add(String.valueOf(t.getData().getYear()));
+        }
+        cbAno.getItems().addAll(anos);
+        cbAno.setValue(String.valueOf(LocalDate.now().getYear()));
+
+        // Listeners
+        cbMesResumo.setOnAction(e -> atualizarResumoMensal());
+        cbAno.setOnAction(e -> atualizarResumoMensal());
+
         atualizarTotais();
         atualizarResumoMensal();
     }
 
-    public void atualizarTotais() { // Atualizar os dois textos fora do resumo mensal, neste caso o saldo atual e as despesas do dia
+    public void atualizarTotais() {
         double saldo = 0, hoje = 0;
         LocalDate hojeData = LocalDate.now();
 
-        for (Transacao t : DadosFinanceiros.transacoes) { // Funçao para obter os dados das receitas e despesas mensais
+        for (Transacao t : DadosFinanceiros.transacoes) {
             if (t.getTipo().equals("Receita")) {
                 saldo += t.getValor();
             } else {
@@ -51,14 +67,22 @@ public class MainViewController implements Initializable {
         lblGastosHoje.setText(String.format("€ %.2f", hoje));
     }
 
-    private void atualizarResumoMensal() { // Como diz o nome da funçao, atualizar o resumo mensal 
+    private void atualizarResumoMensal() {
         String mesSelecionado = cbMesResumo.getValue();
+        String anoSelecionado = cbAno.getValue();
+
+        // Verificação extra de segurança
+        if (mesSelecionado == null || anoSelecionado == null) return;
+
         int mesIndex = cbMesResumo.getItems().indexOf(mesSelecionado) + 1;
+        int ano = Integer.parseInt(anoSelecionado);
 
         double receitas = 0, despesas = 0;
 
-        for (Transacao t : DadosFinanceiros.transacoes) { // Funçao para obter os dados das receitas e despesas mensais
-            if (t.getData().getMonthValue() == mesIndex) {
+        for (Transacao t : DadosFinanceiros.transacoes) {
+            if (t.getData().getMonthValue() == mesIndex &&
+                t.getData().getYear() == ano) {
+
                 if (t.getTipo().equals("Receita")) {
                     receitas += t.getValor();
                 } else {
