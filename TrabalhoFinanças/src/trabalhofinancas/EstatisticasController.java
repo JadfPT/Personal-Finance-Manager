@@ -16,32 +16,36 @@ public class EstatisticasController {
 
     @FXML
     public void initialize() {
-        aplicarEstiloGlobal();
-        preencherAnosDisponiveis();
-        cbAno.setValue(cbAno.getItems().get(0)); // valor padrão
+
+        aplicarEstiloGlobal(); // O CSS dos graficos
+        preencherAnosDisponiveis(); 
+        cbAno.setValue(cbAno.getItems().get(0)); // Para colocar o ano atual como ano de valor inicial
+
+        // Gera os três gráficos
         preencherPieChart();
         preencherBarChart();
         preencherLineChart();
     }
 
-    private void aplicarEstiloGlobal() {
+    private void aplicarEstiloGlobal() {// Estilo dos gráficos
         String css = getClass().getResource("estilo.css").toExternalForm();
         pieChart.getStylesheets().add(css);
         barChart.getStylesheets().add(css);
         lineChart.getStylesheets().add(css);
     }
 
-    private void preencherAnosDisponiveis() {
+    
+    private void preencherAnosDisponiveis() {// Como diz o nome preenche com os anos que estao nas transiçoes
         Set<String> anos = new TreeSet<>();
 
         for (Transacao t : DadosFinanceiros.transacoes) {
             anos.add(String.valueOf(t.getData().getYear()));
         }
 
-        cbAno.getItems().setAll(anos);
+        cbAno.getItems().setAll(anos); // atualiza anos
     }
 
-    private void preencherPieChart() {
+    private void preencherPieChart() {// Gera o gráfico circular
         Map<String, Double> somaPorCategoria = new HashMap<>();
 
         for (Transacao t : DadosFinanceiros.transacoes) {
@@ -56,7 +60,7 @@ public class EstatisticasController {
         }
     }
 
-    private void preencherBarChart() {
+    private void preencherBarChart() { // Gera o gráfico de barras
         Map<String, Double> totalPorMes = new TreeMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 
@@ -65,7 +69,7 @@ public class EstatisticasController {
             totalPorMes.merge(mes, t.getValor(), Double::sum);
         }
 
-        XYChart.Series<String, Number> serie = new XYChart.Series<>();
+        XYChart.Series<String, Number> serie = new XYChart.Series<>(); // Para a legenda do grafico das barras
         serie.setName("Total");
 
         for (var entry : totalPorMes.entrySet()) {
@@ -74,28 +78,29 @@ public class EstatisticasController {
         }
 
         barChart.getData().clear();
-        barChart.setCategoryGap(40);
-        barChart.setBarGap(8);
+        barChart.setCategoryGap(40); // Espaço entre colunas
+        barChart.setBarGap(8); // Espaço entre barras
         barChart.getData().add(serie);
 
-        // ✅ Tooltips nas barras
-        barChart.applyCss(); // necessário para garantir que os nós foram criados
-        barChart.layout();
+        barChart.applyCss(); // Para ver o valor exato das barras
+        barChart.layout();  
         for (XYChart.Data<String, Number> data : serie.getData()) {
             Tooltip tooltip = new Tooltip(String.format("%.2f €", data.getYValue().doubleValue()));
             Tooltip.install(data.getNode(), tooltip);
         }
     }
 
-    private void preencherLineChart() {
+    private void preencherLineChart() { // Gera o gráfico de linha 
         String anoSelecionado = cbAno.getValue();
-        List<Transacao> filtradas = new ArrayList<>(DadosFinanceiros.transacoes);
+
+        List<Transacao> filtradas = new ArrayList<>(DadosFinanceiros.transacoes); // Para ver a lista das transaçoes do ano escolhido
 
         if (!"Todos".equals(anoSelecionado)) {
             int ano = Integer.parseInt(anoSelecionado);
             filtradas.removeIf(t -> t.getData().getYear() != ano);
         }
 
+        // Ordena as transações por data
         filtradas.sort(Comparator.comparing(Transacao::getData));
 
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
@@ -103,25 +108,26 @@ public class EstatisticasController {
 
         double saldo = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-
         LinkedHashMap<String, Double> saldoPorData = new LinkedHashMap<>();
-        for (Transacao t : filtradas) {
+
+        for (Transacao t : filtradas) { // Ve todo o saldo das datas
             saldo += t.getTipo().equals("Receita") ? t.getValor() : -t.getValor();
             String data = t.getData().format(formatter);
             saldoPorData.put(data, saldo);
         }
 
-        for (Map.Entry<String, Double> entry : saldoPorData.entrySet()) {
+        for (Map.Entry<String, Double> entry : saldoPorData.entrySet()) { // Cria os pontinhos da linha
             serie.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
         }
 
         lineChart.getData().clear();
         lineChart.getData().add(serie);
-        lineChart.getXAxis().setTickLabelRotation(0);
+
+        lineChart.getXAxis().setTickLabelRotation(0); // Mantém a data na horizontal
     }
 
     @FXML
-    private void atualizarGraficoPorAno() {
+    private void atualizarGraficoPorAno() { // Como o nome diz atualiza o grafico por ano
         preencherLineChart();
     }
 }

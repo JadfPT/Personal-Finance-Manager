@@ -52,12 +52,11 @@ public class AdicionarTransacaoController {
                 return;
             }
 
-            // Verificação do limite de despesa
-            if (tipo.equals("Despesa")) {
+            if (tipo.equals("Despesa")) {// Verificação do limite
                 double totalAtual = DadosFinanceiros.totalPorCategoria(categoria);
                 Double limite = DadosFinanceiros.limitesPorCategoria.get(categoria);
 
-                if (limite != null && totalAtual + valor > limite) {
+                if (limite != null && totalAtual + valor > limite) { // Verifica se o valor acumulado de despesas é maior q o limite, se for bloqueia
                     mostrarErro("Ultrapassaste o limite definido para " + categoria + "!");
                     return;
                 }

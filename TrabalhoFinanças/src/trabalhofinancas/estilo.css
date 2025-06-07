@@ -1,10 +1,10 @@
-/* ---------- GERAL ---------- */
+/* ---------- Geral ---------- */
 .root {
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: linear-gradient(to bottom, #dcedc8, #a5d6a7);
 }
 
-/* ---------- BOTÕES ---------- */
+/* ---------- Botoes ---------- */
 .button {
     -fx-background-color: #2e7d32;
     -fx-text-fill: white;
@@ -30,7 +30,7 @@
     -fx-scale-y: 0.97;
 }
 
-/* ---------- TÍTULOS E LABELS ---------- */
+/* ---------- Titulos e as labels ---------- */
 .label-title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
@@ -56,7 +56,7 @@
     -fx-text-fill: #c62828;
 }
 
-/* ---------- CARDS ---------- */
+/* ---------- Cartao do resumo mensal ---------- */
 .card {
     -fx-background-color: white;
     -fx-background-radius: 20;
@@ -74,7 +74,7 @@
     -fx-border-radius: 25;
 }
 
-/* ---------- INPUTS ---------- */
+/* ---------- Inputs ---------- */
 .text-field, .text-area {
     -fx-background-radius: 6;
     -fx-border-radius: 6;
@@ -82,7 +82,7 @@
     -fx-padding: 6;
 }
 
-/* ---------- TABELAS ---------- */
+/* ---------- Tabelas ---------- */
 .table-view {
     -fx-background-color: white;
     -fx-border-radius: 8;
@@ -93,7 +93,7 @@
     -fx-background-color: #eeeeee;
 }
 
-/* ---------- TOOLTIPS ---------- */
+/* ---------- Para ver especificamente as coisas das barras e descriçao ---------- */
 .tooltip {
     -fx-background-color: #333;
     -fx-text-fill: white;
@@ -126,7 +126,7 @@
     -fx-font-weight: bold;
 }
 
-/* ---------------------- DATE PICKER BOTÕES ---------------------- */
+/* ---------------------- Botoes da data ---------------------- */
 .date-picker .arrow-button,
 .date-picker .spinner .button {
     -fx-padding: 4 8;
@@ -141,7 +141,7 @@
     -fx-background-radius: 6;
 }
 
-/* ---------- DIÁLOGOS PERSONALIZADOS ---------- */
+/* ---------- Mensagens de sucesso e de erro ---------- */
 
 .dialog-success {
     -fx-background-color: #e8f5e9;
@@ -152,8 +152,6 @@
     -fx-padding: 10;
 }
 
-
-
 .dialog-erro {
     -fx-background-color: #ffebee;
     -fx-border-color: #c62828;
@@ -162,8 +160,6 @@
     -fx-background-radius: 0;
     -fx-padding: 10;
 }
-
-/* --------- Ajustes finais para diálogos --------- */
 
 .dialog-success {
     -fx-background-color: #e8f5e9;
@@ -197,9 +193,9 @@
     -fx-background-color: #388e3c;
 }
 
-/* ---------- GRÁFICOS (CHARTS) ---------- */
+/* ---------- GRÁFICOS ---------- */
 
-/* PieChart - Melhorar o espaço da legenda */
+/* Grafico do circulo para as legendas ficarem com espaço entre si e mais bonitas */
 .chart-legend {
     -fx-padding: 10;
     -fx-background-color: transparent;
@@ -213,7 +209,7 @@
     -fx-alignment: center-left;
 }
 
-/* LineChart - linha verde e datas direitas e nada sobrepostas */
+/* Grafico das linhas para elas serem verdes e as datas ficarem corretas */
 .chart-series-line {
     -fx-stroke: green;
     -fx-stroke-width: 2px;
@@ -227,7 +223,7 @@
     -fx-tick-label-rotation: -45;
 }
 
-/* BarChart - barras e legenda verdes */
+/* Grafico de barras verde */
 .default-color0.chart-bar {
     -fx-bar-fill: green;
 }

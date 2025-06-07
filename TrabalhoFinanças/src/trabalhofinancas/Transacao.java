@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 public class Transacao {
 
-    private String tipo;        // "Receita" ou "Despesa"
-    private String categoria;   // Categoria da transação
-    private double valor;       // Valor em euros
-    private LocalDate data;     // Data da transação
-    private String descricao;   // Descrição textual
+    private String tipo;
+    private String categoria;
+    private double valor;
+    private LocalDate data;
+    private String descricao;
 
     public Transacao(String tipo, String categoria, double valor, LocalDate data, String descricao) {
         this.tipo = tipo;
@@ -18,30 +18,27 @@ public class Transacao {
         this.descricao = descricao;
     }
 
-    // Getters
     public String getTipo() { return tipo; }
     public String getCategoria() { return categoria; }
     public double getValor() { return valor; }
     public LocalDate getData() { return data; }
     public String getDescricao() { return descricao; }
 
-    // Converte para formato linha de ficheiro
-    public String toLinhaTxt() {
+    public String toLinhaTxt() {// Para converter as transaçoes em txt
         return tipo + ";" + categoria + ";" + valor + ";" + data + ";" + descricao.replace(";", ",");
     }
 
-    // Constrói a partir de uma linha do ficheiro
-    public static Transacao fromLinhaTxt(String linha) {
-        String[] partes = linha.split(";", 5); // split em no máx. 5 partes
-        if (partes.length < 5) return null;
+        public static Transacao fromLinhaTxt(String linha) {// Para carregar o ficheiro txt do historico
+            String[] partes = linha.split(";", 5); // Verificar se tem as 5 variaveis
+            if (partes.length < 5) return null;// Se nao tiver da null
 
-        String tipo = partes[0];
-        String categoria = partes[1];
-        double valor = Double.parseDouble(partes[2]);
-        LocalDate data = LocalDate.parse(partes[3]);
-        String descricao = partes[4];
-        return new Transacao(tipo, categoria, valor, data, descricao);
-    }
+            String tipo = partes[0];// Transforma em string
+            String categoria = partes[1];// Transforma em string
+            double valor = Double.parseDouble(partes[2]);// Transforma em double
+            LocalDate data = LocalDate.parse(partes[3]);// Transforma em LocalDate
+            String descricao = partes[4];// Transforma em string
+            return new Transacao(tipo, categoria, valor, data, descricao);
+        }
 
     @Override
     public String toString() {
